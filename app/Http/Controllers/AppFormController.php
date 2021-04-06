@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AppFormController extends Controller
@@ -13,7 +14,9 @@ class AppFormController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $users = User::paginate(100);
+
+        return view('home', compact('users'));
     }
 
     /**
@@ -35,9 +38,10 @@ class AppFormController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
+        $dados = $request->all();
+        User::create($dados);
 
-        // return view('home');
+        return  redirect()->route('app-form.index');
     }
 
     /**

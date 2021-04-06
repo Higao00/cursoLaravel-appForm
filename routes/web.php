@@ -21,5 +21,3 @@ Route::get('/', function () {
 
 Route::resource('app-form', AppFormController::class);
 
-Route::resource('addUserRoute', AppFormController::class);
-

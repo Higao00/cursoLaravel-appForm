@@ -34,6 +34,17 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($users as $key => $user)
+                    <tr>
+                        <td>{{ $key + 1  }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->lastName }}</td>
+                        <td>{{ $user->birthDate }}</td>
+                        <td>{{ $user->document }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td> <button class="btn-success">Editar</button> </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -50,31 +61,31 @@
                     </button>
                 </div>
                 <div class="modal-body imagens-modal">
-                    <form action="{{ route('addUserRoute.store') }}" id="formAddUser" method="POST">
+                    <form action="{{ route('app-form.store') }}" id="formAddUser" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="nameUser" class="col-form-label text-white">Name:</label>
-                            <input type="text" class="form-control" id="nameUser" name="nameUser" required>
+                            <input type="text" class="form-control" id="nameUser" name="name" required>
                         </div>
 
                         <div class="form-group">
                             <label for="lastNameUser" class="col-form-label text-white">Last Name:</label>
-                            <input type="text" class="form-control" id="lastNameUser" name="lastNameUser">
+                            <input type="text" class="form-control" id="lastNameUser" name="lastName">
                         </div>
 
                         <div class="form-group">
                             <label for="documentUser" class="col-form-label text-white">Document:</label>
-                            <input type="text" class="form-control" id="documentUser" name="documentUser" required>
+                            <input type="text" class="form-control" id="documentUser" name="document" required>
                         </div>
 
                         <div class="form-group">
                             <label for="birthDateUser" class="col-form-label text-white">Birth Date:</label>
-                            <input type="date" class="form-control" id="birthDateUser" name="birthDateUser" required>
+                            <input type="date" class="form-control" id="birthDateUser" name="birthDate" required>
                         </div>
 
                         <div class="form-group">
                             <label for="emailUser" class="col-form-label text-white">Email:</label>
-                            <input type="email" class="form-control" id="emailUser" name="emailUser" required>
+                            <input type="email" class="form-control" id="emailUser" name="email" required>
                         </div>
 
                     </form>
