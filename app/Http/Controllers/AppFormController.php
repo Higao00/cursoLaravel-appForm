@@ -14,7 +14,7 @@ class AppFormController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(100);
+        $users = User::paginate(1000);
 
         return view('home', compact('users'));
     }
@@ -39,9 +39,13 @@ class AppFormController extends Controller
     {
 
         $dados = $request->all();
-        User::create($dados);
+        $users = User::create($dados);
 
-        return  redirect()->route('app-form.index');
+        $result['success'] = true;
+        $result['message'] = 'Cadastrado com sucesso!!';
+        $result['dados'] = $users;
+
+        echo json_encode($result);
     }
 
     /**
@@ -52,7 +56,14 @@ class AppFormController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $user = User::find($id);
+
+        $result['success'] = true;
+        $result['message'] = 'Sucesso!!';
+        $result['dados'] = $user;
+
+        echo json_encode($result);
     }
 
     /**
