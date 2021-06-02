@@ -1,0 +1,26 @@
+version: '3'
+services:
+    nginx:
+        build: .
+        container_name: nginx
+        ports:
+            - "8080:80"
+        volumes:
+            - ./:/usr/share/nginx
+        networks:
+            - app-network
+    mysql:
+        image: mysql:5.7.34
+        container_name: mysql-app
+        ports:
+            - "3306:3306"
+        volumes:
+            - .docker/dbdata:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: appform
+            MYSQL_ROOT_PASSWORD: 1234
+        networks:
+            - app-network
+networks:
+    app-network:
+        driver: bridge
