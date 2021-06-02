@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AppFormController extends Controller
@@ -13,7 +14,11 @@ class AppFormController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $users = User::paginate(100);
+
+        return view('home', compact('users'));
+
     }
 
     /**
@@ -34,10 +39,15 @@ class AppFormController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $dados = $request->all();
+        $users = User::create($dados);
 
-        dd($request->all());
+        $result["success"] = true;
+        $result["message"] =  "Cadastrado com sucesso";
+        $result["dados"] = $users;
 
-        // return view('home');
+        echo json_encode($result);
     }
 
     /**
@@ -48,7 +58,14 @@ class AppFormController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+
+
+        $result["success"] = true;
+        $result["message"] =  "Dados do Usuário";
+        $result["dados"] = $user;
+
+        echo json_encode($result);
     }
 
     /**
@@ -71,7 +88,19 @@ class AppFormController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->all()['name'];
+        $user->lastName = $request->all()['lastName'];
+        $user->document = $request->all()['document'];
+        $user->birthDate = $request->all()['birthDate'];
+        $user->email = $request->all()['email'];
+        $user->save();
+
+        $result["success"] = true;
+        $result["message"] =  "Dados do Usuário";
+        $result["dados"] = $user;
+
+        echo json_encode($result);
     }
 
     /**
