@@ -20,6 +20,3 @@ Route::get('/', function () {
 });
 
 Route::resource('app-form', AppFormController::class);
-
-
-

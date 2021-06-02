@@ -14,11 +14,8 @@ class AppFormController extends Controller
      */
     public function index()
     {
-
-        $users = User::paginate(100);
-
-        return view('home', compact('users'));
-
+       $users = User::paginate(1000);
+        return view('home', compact('users'));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     }
 
     /**
@@ -46,7 +43,6 @@ class AppFormController extends Controller
         $result["success"] = true;
         $result["message"] =  "Cadastrado com sucesso";
         $result["dados"] = $users;
-
         echo json_encode($result);
     }
 
@@ -59,12 +55,9 @@ class AppFormController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-
-
-        $result["success"] = true;
-        $result["message"] =  "Dados do Usuário";
-        $result["dados"] = $user;
-
+        $result['success'] = true;
+        $result['message'] = 'Sucesso!!';
+        $result['dados'] = $user;
         echo json_encode($result);
     }
 

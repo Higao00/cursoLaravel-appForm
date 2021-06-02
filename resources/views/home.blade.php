@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
 </head>
 
 <body>
@@ -31,7 +34,7 @@
         <hr>
 
         <table class="table" id="tableUsers">
-            <thead class="thead-dark">
+           <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">NAME</th>
@@ -39,16 +42,17 @@
                     <th scope="col">DOCUMENT</th>
                     <th scope="col">BIRTH DATE</th>
                     <th scope="col">E-MAIL</th>
-
                 </tr>
             </thead>
 
             <tbody>
                 @foreach ($users as $key => $user)
-                    <tr id="{{ $user->id }}">
+
+                    <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="{{ $user->id }}" name="user" @if ($key == 0) checked @endif>
+                                <input class="form-check-input" name="user" value="{{ $user->id }}" type="radio"
+                                    id="users{{ $user->id }}" @if ($key == 0) checked @endif>
                             </div>
                         </td>
                         <td>{{ $user->name }}</td>
@@ -58,6 +62,7 @@
                         <td>{{ $user->email }}</td>
                     </tr>
                 @endforeach
+
 
             </tbody>
         </table>
@@ -101,7 +106,6 @@
                             <label for="emailUser" class="col-form-label text-white">Email:</label>
                             <input type="email" class="form-control" id="emailUser" name="email" required>
                         </div>
-
                     </form>
                 </div>
                 <div class="modal-footer imagens-modal">
@@ -164,7 +168,6 @@
     </div>
 
       {{-- Modal edit  User --}}
-
     <div class="modal fade" id="modalEditUser" tabindex="-1" role="dialog" aria-labelledby="modalEditUser"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -202,7 +205,6 @@
                             <label for="emailUser" class="col-form-label text-white">Email:</label>
                             <input type="email" class="form-control" id="editEmailUser" name="email" required>
                         </div>
-
                     </form>
                 </div>
                 <div class="modal-footer imagens-modal">
@@ -243,10 +245,12 @@
       </div>
   </div>
 
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
 
     {{-- inicio ajax --}}
 
@@ -351,6 +355,7 @@
 
             }
          });
+
 
     </script>
 </body>
