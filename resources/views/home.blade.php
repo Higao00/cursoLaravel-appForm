@@ -30,7 +30,7 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditUser" id="editUser"><i
                 class="fas fa-user-edit users"></i>Edit</button>
 
-        <button type="button" class="btn btn-danger" id="deleteUser"><i class="fas fa-user-times users" ></i>Delete</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser" id="deleteUser"><i class="fas fa-user-times users" ></i>Delete</button>
         <hr>
 
         <table class="table" id="tableUsers">
@@ -223,7 +223,7 @@
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header imagens-modal">
-                  <h5 class="modal-title text-white" id="exampleModalLabel">Edit User</h5>
+                  <h5 class="modal-title text-white" id="exampleModalLabel">Delete User</h5>
                   <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -232,7 +232,7 @@
                   <form id="formDeleteUser" name="formDeleteUser">
                       @csrf
                       <div class="form-group">
-                          <h2 class="text-center">Deseja Excluir este Usuário</h2>
+                          <h5 class="text-center text-danger">Deseja Excluir este Usuário??</h5>
                       </div>
                   </form>
               </div>
