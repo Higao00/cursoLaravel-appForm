@@ -30,11 +30,12 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditUser" id="editUser"><i
                 class="fas fa-user-edit users"></i>Edit</button>
 
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser" id="deleteUser"><i class="fas fa-user-times users" ></i>Delete</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser"
+            id="deleteUser"><i class="fas fa-user-times users"></i>Delete</button>
         <hr>
 
         <table class="table" id="tableUsers">
-           <thead class="thead-dark">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">NAME</th>
@@ -48,7 +49,7 @@
             <tbody>
                 @foreach ($users as $key => $user)
 
-                    <tr>
+                    <tr id="{{ $user->id }}">
                         <td>
                             <div class="form-check">
                                 <input class="form-check-input" name="user" value="{{ $user->id }}" type="radio"
@@ -167,84 +168,34 @@
         </div>
     </div>
 
-      {{-- Modal edit  User --}}
-    <div class="modal fade" id="modalEditUser" tabindex="-1" role="dialog" aria-labelledby="modalEditUser"
+    {{-- Modal delete User --}}
+
+    <div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUser"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header imagens-modal">
-                    <h5 class="modal-title text-white" id="exampleModalLabel">Edit User</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Delete User</h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body imagens-modal">
-                    <form id="formEditUser" name="formEditUser">
+                    <form id="formDeleteUser" name="formDeleteUser">
                         @csrf
                         <div class="form-group">
-                            <label for="nameUser" class="col-form-label text-white">Name:</label>
-                            <input type="text" class="form-control" id="editNameUser" name="name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lastNameUser" class="col-form-label text-white">Last Name:</label>
-                            <input type="text" class="form-control" id="editLastNameUser" name="lastName">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="documentUser" class="col-form-label text-white">Document:</label>
-                            <input type="text" class="form-control" id="editDocumentUser" name="document" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="birthDateUser" class="col-form-label text-white">Birth Date:</label>
-                            <input type="date" class="form-control" id="editBirthDateUser" name="birthDate" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="emailUser" class="col-form-label text-white">Email:</label>
-                            <input type="email" class="form-control" id="editEmailUser" name="email" required>
+                            <h5 class="text-center text-danger">Deseja Excluir este Usuário??</h5>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer imagens-modal">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
-                    <button type="submit" class="btn btn-success" form="formEditUser"
-                        name="formEditUser">FINISH</button>
+                    <button type="submit" class="btn btn-success" form="formDeleteUser"
+                        name="formDeleteUser">FINISH</button>
                 </div>
             </div>
         </div>
     </div>
-
-      {{-- Modal delete User --}}
-
-      <div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUser"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header imagens-modal">
-                  <h5 class="modal-title text-white" id="exampleModalLabel">Delete User</h5>
-                  <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body imagens-modal">
-                  <form id="formDeleteUser" name="formDeleteUser">
-                      @csrf
-                      <div class="form-group">
-                          <h5 class="text-center text-danger">Deseja Excluir este Usuário??</h5>
-                      </div>
-                  </form>
-              </div>
-              <div class="modal-footer imagens-modal">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
-                  <button type="submit" class="btn btn-success" form="formDeleteUser"
-                      name="formDeleteUser">FINISH</button>
-              </div>
-          </div>
-      </div>
-  </div>
-
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -334,7 +285,7 @@
                     cols += '<td>' + dados["birthDate"] + '</td>';
                     cols += '<td>' + dados["email"] + '</td>';
                     newRow.append(cols);
-                 
+
                     $("#" + idUser).remove();
                     $("#tableUsers").append(newRow);
                     $('#modalEditUser').modal('toggle');
@@ -344,9 +295,9 @@
             });
         });
 
-         $('#deleteUser').click(function() {
+        $('#deleteUser').click(function() {
             var idUser = 0;
-            idUser = $('input[name="user"]:checked').val(); 
+            idUser = $('input[name="user"]:checked').val();
 
             if (idUser != 0) {
                 $.ajax({
@@ -354,8 +305,7 @@
                 });
 
             }
-         });
-
+        });
 
     </script>
 </body>
