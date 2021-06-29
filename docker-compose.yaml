@@ -10,7 +10,7 @@ services:
         networks:
             - app-network
     mysql:
-        image: mysql:5.7.34
+        image: mysql:8.0.25
         container_name: mysql-app
         ports:
             - "3306:3306"
