@@ -168,43 +168,8 @@
         </div>
     </div>
 
-<<<<<<< HEAD
-    {{-- Modal edit  User --}}
-    <div class="modal fade" id="modalEditUser" tabindex="-1" role="dialog" aria-labelledby="modalEditUser"
-=======
+
     {{-- Modal delete User --}}
-
-    <div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUser"
->>>>>>> c11aeb852afeb34e0041a13661ae0013157743f4
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header imagens-modal">
-                    <h5 class="modal-title text-white" id="exampleModalLabel">Delete User</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body imagens-modal">
-                    <form id="formDeleteUser" name="formDeleteUser">
-                        @csrf
-                        <div class="form-group">
-                            <h5 class="text-center text-danger">Deseja Excluir este Usuário??</h5>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer imagens-modal">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
-                    <button type="submit" class="btn btn-success" form="formDeleteUser"
-                        name="formDeleteUser">FINISH</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<<<<<<< HEAD
-    {{-- Modal delete User --}}
-
     <div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUser"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -232,9 +197,6 @@
         </div>
     </div>
 
-
-=======
->>>>>>> c11aeb852afeb34e0041a13661ae0013157743f4
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -299,7 +261,7 @@
             }
         });
 
-        // requesição editar (update) usuário
+        // requesição editar (update) usuário'
         $('form[name="formEditUser"]').submit(function(event) {
             event.preventDefault(); //Cancela o evento se for cancelável, sem parar a propagação do mesmo obs 
             var idUser = 0; //iniciando var com 0
@@ -333,12 +295,7 @@
             });
         });
 
-<<<<<<< HEAD
-        $('form[name="formDeleteUser"]').submit(function(event) {
-            event.preventDefault(); 
-=======
         $('#deleteUser').click(function() {
->>>>>>> c11aeb852afeb34e0041a13661ae0013157743f4
             var idUser = 0;
             idUser = $('input[name="user"]:checked').val();
 
