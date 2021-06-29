@@ -30,11 +30,12 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditUser" id="editUser"><i
                 class="fas fa-user-edit users"></i>Edit</button>
 
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser" id="deleteUser"><i class="fas fa-user-times users" ></i>Delete</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser"
+            id="deleteUser"><i class="fas fa-user-times users"></i>Delete</button>
         <hr>
 
         <table class="table" id="tableUsers">
-           <thead class="thead-dark">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">NAME</th>
@@ -48,7 +49,7 @@
             <tbody>
                 @foreach ($users as $key => $user)
 
-                    <tr>
+                    <tr id="{{ $user->id }}">
                         <td>
                             <div class="form-check">
                                 <input class="form-check-input" name="user" value="{{ $user->id }}" type="radio"
@@ -167,7 +168,7 @@
         </div>
     </div>
 
-      {{-- Modal edit  User --}}
+    {{-- Modal edit  User --}}
     <div class="modal fade" id="modalEditUser" tabindex="-1" role="dialog" aria-labelledby="modalEditUser"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -216,34 +217,34 @@
         </div>
     </div>
 
-      {{-- Modal delete User --}}
+    {{-- Modal delete User --}}
 
-      <div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUser"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header imagens-modal">
-                  <h5 class="modal-title text-white" id="exampleModalLabel">Delete User</h5>
-                  <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body imagens-modal">
-                  <form id="formDeleteUser" name="formDeleteUser">
-                      @csrf
-                      <div class="form-group">
-                          <h5 class="text-center text-danger">Deseja Excluir este Usuário??</h5>
-                      </div>
-                  </form>
-              </div>
-              <div class="modal-footer imagens-modal">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
-                  <button type="submit" class="btn btn-success" form="formDeleteUser"
-                      name="formDeleteUser">FINISH</button>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUser"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header imagens-modal">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Delete User</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body imagens-modal">
+                    <form id="formDeleteUser" name="formDeleteUser">
+                        @csrf
+                        <div class="form-group">
+                            <h5 class="text-center text-danger">Deseja Excluir este Usuário??</h5>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer imagens-modal">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
+                    <button type="submit" class="btn btn-success" form="formDeleteUser"
+                        name="formDeleteUser">FINISH</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -334,7 +335,7 @@
                     cols += '<td>' + dados["birthDate"] + '</td>';
                     cols += '<td>' + dados["email"] + '</td>';
                     newRow.append(cols);
-                 
+
                     $("#" + idUser).remove();
                     $("#tableUsers").append(newRow);
                     $('#modalEditUser').modal('toggle');
@@ -344,18 +345,24 @@
             });
         });
 
-         $('#deleteUser').click(function() {
+        $('form[name="formDeleteUser"]').submit(function(event) {
+            event.preventDefault(); 
             var idUser = 0;
-            idUser = $('input[name="user"]:checked').val(); 
+            idUser = $('input[name="user"]:checked').val();
 
             if (idUser != 0) {
                 $.ajax({
-
+                    method: "DELETE",
+                    url: "{{ route('app-form.destroy', '') }}" + "/" + idUser,
+                    dataType: "json",
+                    success: function(result) {
+                        var dados = result["dados"];
+                        console.log(dados)
+                        // $("#" + idUser).remove();
+                    }
                 });
-
             }
-         });
-
+        });
 
     </script>
 </body>

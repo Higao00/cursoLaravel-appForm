@@ -104,6 +104,10 @@ class AppFormController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result["success"] = true;
+        $result["message"] =  "Dados do Usuário";
+        $result["dados"] = $id;
+
+        echo json_encode($result);
     }
 }
