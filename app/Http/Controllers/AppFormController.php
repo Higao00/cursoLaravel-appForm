@@ -14,8 +14,8 @@ class AppFormController extends Controller
      */
     public function index()
     {
-       $users = User::paginate(1000);
-        return view('home', compact('users'));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        $users = User::paginate(1000);
+        return view('home', compact('users'));
     }
 
     /**
@@ -36,7 +36,7 @@ class AppFormController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $dados = $request->all();
         $users = User::create($dados);
 
@@ -104,9 +104,11 @@ class AppFormController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::destroy($id);
+
         $result["success"] = true;
-        $result["message"] =  "Dados do Usuário";
-        $result["dados"] = $id;
+        $result["message"] =  "Usuario removido";
+        $result["dados"] = $user;
 
         echo json_encode($result);
     }

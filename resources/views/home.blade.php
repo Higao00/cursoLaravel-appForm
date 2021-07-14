@@ -168,7 +168,6 @@
         </div>
     </div>
 
-
     {{-- Modal delete User --}}
     <div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="modalDeleteUser"
         aria-hidden="true">
@@ -221,7 +220,7 @@
                     cols +=
                         '<td><div class="form-check"><input class="form-check-input" name="user" value="' +
                         dados["id"] + '"type="radio" id="users' +
-                        dados["id"] + '"></div></td>';
+                        dados["id"] + '" checked></div></td>';
                     cols += '<td>' + dados["name"] + '</td>';
                     cols += '<td>' + dados["lastName"] + '</td>';
                     cols += '<td>' + dados["document"] + '</td>';
@@ -295,7 +294,9 @@
             });
         });
 
-        $('#deleteUser').click(function() {
+        $('form[name="formDeleteUser"]').submit(function(event) {
+            event.preventDefault(); //Cancela o evento se for cancelável, sem parar a propagação do mesmo obs 
+
             var idUser = 0;
             idUser = $('input[name="user"]:checked').val();
 
@@ -304,10 +305,11 @@
                     method: "DELETE",
                     url: "{{ route('app-form.destroy', '') }}" + "/" + idUser,
                     dataType: "json",
+                    data: $(this).serialize(),
                     success: function(result) {
-                        var dados = result["dados"];
-                        console.log(dados)
-                        // $("#" + idUser).remove();
+                        $("#" + idUser).remove();
+                        $('input[name="user"]').prop('checked', true);
+                        $('#modalDeleteUser').modal('toggle');
                     }
                 });
             }
