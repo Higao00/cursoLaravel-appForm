@@ -21,17 +21,25 @@
 <body>
 
     <div class="container">
-        {{-- {{ dd($users->all()) }} --}}
         <hr>
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAddUser"><i
-                class="fas fa-user-plus users"></i>Add
-            User</button>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="userSearch" placeholder="Pesquise Aqui...">
+                </div>
+            </div>
 
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditUser" id="editUser"><i
-                class="fas fa-user-edit users"></i>Edit</button>
+            <div class="col-md" style="display: flex; justify-content: flex-end;">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAddUser"><i
+                        class="fas fa-user-plus users"></i>Add</button>&nbsp;&nbsp;
 
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser"
-            id="deleteUser"><i class="fas fa-user-times users"></i>Delete</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditUser"
+                    id="editUser"><i class="fas fa-user-edit users"></i>Edit</button>&nbsp;&nbsp;
+
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUser"
+                    id="deleteUser"><i class="fas fa-user-times users"></i>Delete</button>
+            </div>
+        </div>
         <hr>
 
         <table class="table" id="tableUsers">
@@ -58,8 +66,8 @@
                         </td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->lastName }}</td>
-                        <td>{{ $user->document }}</td>
-                        <td>{{ $user->birthDate }}</td>
+                        <td class="documentTable">{{ $user->document }}</td>
+                        <td class="birthDateTable">{{ $user->birthDate }}</td>
                         <td>{{ $user->email }}</td>
                     </tr>
                 @endforeach
@@ -80,6 +88,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body imagens-modal">
                     <form id="formAddUser" name="formAddUser">
                         @csrf
@@ -109,6 +118,7 @@
                         </div>
                     </form>
                 </div>
+
                 <div class="modal-footer imagens-modal">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
                     <button type="submit" class="btn btn-success" form="formAddUser" name="formAddUser">FINISH</button>
@@ -118,7 +128,6 @@
     </div>
 
     {{-- Modal edit  User --}}
-
     <div class="modal fade" id="modalEditUser" tabindex="-1" role="dialog" aria-labelledby="modalEditUser"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -129,6 +138,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body imagens-modal">
                     <form id="formEditUser" name="formEditUser">
                         @csrf
@@ -159,6 +169,7 @@
 
                     </form>
                 </div>
+
                 <div class="modal-footer imagens-modal">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
                     <button type="submit" class="btn btn-success" form="formEditUser"
@@ -200,11 +211,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.11.2/jquery.mask.js"
+        integrity="sha512-bwanfE29Vxh7VGuxx44U2WkSG9944fjpYRTC3GDUjh0UJ5FOdCQxMJgKWBnlxP5hHKpFJKmawufWEyr5pvwYVA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
     {{-- inicio ajax --}}
 
     <script>
+        // Mascara do documento.
+        $('#documentUser').mask('999.999.999-99');
+        $('.documentTable').mask('999.999.999-99');
+
         //  requisição criar usuário
         $('form[name="formAddUser"]').submit(function(event) {
             event.preventDefault(); //Cancela o evento se for cancelável, sem parar a propagação do mesmo obs 
@@ -214,23 +232,28 @@
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(result) {
-                    var dados = result["dados"];
-                    var newRow = $('<tr id="' + dados["id"] + '" >');
-                    var cols = "";
-                    cols +=
-                        '<td><div class="form-check"><input class="form-check-input" name="user" value="' +
-                        dados["id"] + '"type="radio" id="users' +
-                        dados["id"] + '" checked></div></td>';
-                    cols += '<td>' + dados["name"] + '</td>';
-                    cols += '<td>' + dados["lastName"] + '</td>';
-                    cols += '<td>' + dados["document"] + '</td>';
-                    cols += '<td>' + dados["birthDate"] + '</td>';
-                    cols += '<td>' + dados["email"] + '</td>';
-                    newRow.append(cols);
-                    $("#tableUsers").append(newRow);
-                    $('#modalAddUser').modal('toggle');
-                    $('#formAddUser').trigger(
-                        "reset"); //coloca todos valores de todos inputs do form como vazio
+                    console.log(result)
+                    if (result['success'] == true) {
+                        var dados = result["dados"];
+                        var newRow = $('<tr id="' + dados["id"] + '" >');
+                        var cols = "";
+                        cols +=
+                            '<td><div class="form-check"><input class="form-check-input" name="user" value="' +
+                            dados["id"] + '"type="radio" id="users' +
+                            dados["id"] + '" checked></div></td>';
+                        cols += '<td>' + dados["name"] + '</td>';
+                        cols += '<td>' + dados["lastName"] + '</td>';
+                        cols += '<td>' + dados["document"] + '</td>';
+                        cols += '<td>' + dados["birthDate"] + '</td>';
+                        cols += '<td>' + dados["email"] + '</td>';
+                        newRow.append(cols);
+                        $("#tableUsers").append(newRow);
+                        $('#modalAddUser').modal('toggle');
+                        $('#formAddUser').trigger(
+                            "reset"); //coloca todos valores de todos inputs do form como vazio
+                    } else {
+
+                    }
                 }
             });
         });
@@ -260,7 +283,7 @@
             }
         });
 
-        // requesição editar (update) usuário'
+        // requisição editar (update) usuário'
         $('form[name="formEditUser"]').submit(function(event) {
             event.preventDefault(); //Cancela o evento se for cancelável, sem parar a propagação do mesmo obs 
             var idUser = 0; //iniciando var com 0
@@ -294,6 +317,7 @@
             });
         });
 
+        // requisição de deletar o usuario.
         $('form[name="formDeleteUser"]').submit(function(event) {
             event.preventDefault(); //Cancela o evento se for cancelável, sem parar a propagação do mesmo obs 
 
@@ -313,6 +337,17 @@
                     }
                 });
             }
+        });
+
+        // requisição de pesquisa so usuario na tabela.
+        $('#userSearch').keyup(function(event) {
+            var texto = this.value;
+            $("#tableUsers tbody tr").css("display", "table-row");
+            $("#tableUsers tbody tr").each(function() {
+                if ($(this).text().toUpperCase().indexOf(texto.toUpperCase()) < 0) {
+                    $(this).css("display", "none");
+                }
+            })
         });
     </script>
 </body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AppFormController extends Controller
 {
@@ -36,13 +37,51 @@ class AppFormController extends Controller
      */
     public function store(Request $request)
     {
+        function limpa($valor)
+        {
+            $valor = trim($valor);
+            $valor = str_replace(".", "", $valor);
+            $valor = str_replace(",", "", $valor);
+            $valor = str_replace("-", "", $valor);
+            $valor = str_replace("/", "", $valor);
+            return $valor;
+        }
 
         $dados = $request->all();
-        $users = User::create($dados);
 
-        $result["success"] = true;
-        $result["message"] =  "Cadastrado com sucesso";
-        $result["dados"] = $users;
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'lastName' => 'required|max:255',
+            'document' => 'required|min:14|max:14',
+            'birthDate' => 'required',
+            'email' => 'required|unique:users'
+        ]);
+
+        if ($validation->fails()) {
+            $result["success"] = false;
+            $result["message"] =  "Os dados estão incorretos, verifique e tente novamente!!";
+            $result['dados'] = $validation->errors();
+        } else {
+
+            $name = $dados['name'];
+            $lastName = $dados['lastName'];
+            $document = limpa($dados['document']);
+            $birthDate = $dados['birthDate'];
+            $email = $dados['email'];
+
+            $users = User::create([
+                'name' => $name,
+                'lastName' => $lastName,
+                'document' => $document,
+                'birthDate' => $birthDate,
+                'email' => $email
+            ]);
+
+            $result["success"] = true;
+            $result["message"] =  "Cadastrado com sucesso";
+            $result["dados"] = $users;
+        }
+
         echo json_encode($result);
     }
 
